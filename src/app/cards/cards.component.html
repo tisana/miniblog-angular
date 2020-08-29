@@ -1,0 +1,20 @@
+<mat-card class="blog-card">
+  <mat-card-header>
+    <mat-card-title>{{card.name}}</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <div>
+      {{card.content}}
+    </div>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-button>LIKE</button>
+    <button mat-button>Comment</button>
+  </mat-card-actions>
+  <mat-card-header>
+    <div mat-card-avatar class="example-header-image"></div>
+    <mat-card-title>{{card.authorUserName}}</mat-card-title>
+    <mat-card-subtitle>2 hours ago</mat-card-subtitle>
+  </mat-card-header>
+
+</mat-card>
