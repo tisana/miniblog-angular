@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {Card} from '../models/card';
 import {CARDS} from '../models/mock-card';
 import {Observable, of} from 'rxjs';
@@ -8,9 +8,14 @@ import {Observable, of} from 'rxjs';
 })
 export class CardService {
 
-  constructor() { }
+  constructor() {
+  }
 
   getCards(): Observable<Card[]> {
     return of(CARDS);
+  }
+
+  getCard(id: number): Observable<Card> {
+    return of(CARDS.find(card => card.id === id));
   }
 }

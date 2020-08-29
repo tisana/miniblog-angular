@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Card} from './models/card';
 import {CardService} from './services/card.service';
 
@@ -9,7 +9,6 @@ import {CardService} from './services/card.service';
 })
 export class CardsComponent implements OnInit {
   cards: Card[];
-  selectedCard: Card;
 
   constructor(private cardService: CardService) { }
 
@@ -19,9 +18,5 @@ export class CardsComponent implements OnInit {
 
   getCards(): void {
     this.cardService.getCards().subscribe(cards => this.cards = cards);
-  }
-
-  onEdit(card: Card): void {
-    this.selectedCard = card;
   }
 }

@@ -1,9 +1,10 @@
 export interface Card {
+  id?: number;
   name: string;
   status: string;
   content: string;
-  authorId: number;
+  authorId?: number;
   authorUserName: string;
-  categoryId: number;
+  categoryId?: number;
   categoryName: string;
 }

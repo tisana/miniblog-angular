@@ -5,7 +5,7 @@
         <div class="card-title">
           <mat-card-title>{{card.name}}</mat-card-title>
           <span class="icon-spacer"></span>
-          <button mat-icon-button class="edit-icon" aria-label="edit icon" (click)="onEdit(card)">
+          <button mat-icon-button class="edit-icon" aria-label="edit icon" routerLink="/card/edit/{{card.id}}">
             <mat-icon>edit</mat-icon>
           </button>
           <button mat-icon-button class="delete-icon" aria-label="delete icon">
@@ -34,4 +34,4 @@
   </mat-grid-tile>
 </mat-grid-list>
 
-<app-card-detail [card]="selectedCard"></app-card-detail>
+<!--<app-card-detail [card]="selectedCard"></app-card-detail>-->
