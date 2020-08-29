@@ -5,7 +5,7 @@
         <div class="card-title">
           <mat-card-title>{{card.name}}</mat-card-title>
           <span class="icon-spacer"></span>
-          <button mat-icon-button class="edit-icon" aria-label="edit icon">
+          <button mat-icon-button class="edit-icon" aria-label="edit icon" (click)="onEdit(card)">
             <mat-icon>edit</mat-icon>
           </button>
           <button mat-icon-button class="delete-icon" aria-label="delete icon">
@@ -33,3 +33,5 @@
     </mat-card>
   </mat-grid-tile>
 </mat-grid-list>
+
+<app-card-detail [card]="selectedCard"></app-card-detail>

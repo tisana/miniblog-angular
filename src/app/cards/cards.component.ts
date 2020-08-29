@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {CARDS} from './mock-card';
+import {Card} from './models/card';
+import {CardService} from './services/card.service';
 
 @Component({
   selector: 'app-cards',
@@ -7,11 +8,20 @@ import {CARDS} from './mock-card';
   styleUrls: ['./cards.component.css']
 })
 export class CardsComponent implements OnInit {
-  cards = CARDS;
+  cards: Card[];
+  selectedCard: Card;
 
-  constructor() { }
+  constructor(private cardService: CardService) { }
 
   ngOnInit(): void {
+    this.getCards();
   }
 
+  getCards(): void {
+    this.cardService.getCards().subscribe(cards => this.cards = cards);
+  }
+
+  onEdit(card: Card): void {
+    this.selectedCard = card;
+  }
 }

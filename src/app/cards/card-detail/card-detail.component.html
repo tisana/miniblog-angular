@@ -1,0 +1,39 @@
+<div *ngIf="card">
+  <h2>Card Details</h2>
+  <form class="card-form">
+    <mat-form-field class="form-full-width">
+      <mat-label> Blog Name
+        <input matInput placeholder="Blog Title" [(ngModel)]="card.name" value="{{card.name}}">
+      </mat-label>
+    </mat-form-field>
+
+    <mat-form-field class="form-full-width">
+      <mat-label>Content
+        <textarea matInput placeholder="Ex. It makes me feel..." [(ngModel)]="card.content" rows="4"></textarea>
+      </mat-label>
+    </mat-form-field>
+
+    <mat-form-field class="form-full-width">
+      <mat-label>Status</mat-label>
+      <mat-select>
+        <mat-option value="DRAFT">Draft</mat-option>
+        <mat-option value="PUBLISH">Publish</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="form-full-width">
+      <mat-label>Category</mat-label>
+      <mat-select>
+        <mat-option value=""></mat-option>
+        <mat-option value="1">Cat 1</mat-option>
+        <mat-option value="2">Cat 2</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="form-full-width">
+      <mat-label>Author
+        <input matInput placeholder="Aka username" value="">
+      </mat-label>
+    </mat-form-field>
+  </form>
+</div>
