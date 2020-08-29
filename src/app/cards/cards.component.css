@@ -1,8 +1,26 @@
 .blog-card {
-  max-width: 400px;
+  width: 400px;
+  height: 350px;
 }
 
-.example-header-image {
+.avartar-icon {
   background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
   background-size: cover;
+}
+
+.card-title {
+  display: flex;
+  width: 100%;
+  margin-left: -32px;
+}
+.icon-spacer {
+  flex: 1 1 auto;
+}
+
+.card-title .mat-card-title {
+  padding-top: 12px;
+}
+
+.mat-card-content {
+  height: 180px;
 }
