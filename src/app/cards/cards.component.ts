@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {Card} from './card';
+import {CARDS} from './mock-card';
 
 @Component({
   selector: 'app-cards',
@@ -7,15 +7,7 @@ import {Card} from './card';
   styleUrls: ['./cards.component.css']
 })
 export class CardsComponent implements OnInit {
-  card: Card = {
-    name: 'Card1',
-    status: 'DRAFT',
-    content: 'Test Content',
-    authorId: 1,
-    authorUserName: 'Seph',
-    categoryId: 1,
-    categoryName: 'Poll'
-  };
+  cards = CARDS;
 
   constructor() { }
 
