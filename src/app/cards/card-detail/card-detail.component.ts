@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Card} from '../models/card';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {CardService} from '../services/card.service';
 import {Location} from '@angular/common';
 import {Category} from '../models/category';
@@ -13,21 +13,22 @@ import {Category} from '../models/category';
 export class CardDetailComponent implements OnInit {
   @Input() card: Card = new Card();
   categories: Category[];
+  isEdit: boolean;
+  currentId: number;
 
-  // selectedCategory: number;
-
-  constructor(private route: ActivatedRoute, private cardService: CardService, private location: Location) {
+  constructor(private route: ActivatedRoute, private router: Router, private cardService: CardService, private location: Location) {
   }
 
   ngOnInit(): void {
+    this.currentId = +this.route.snapshot.paramMap.get('id');
+    this.isEdit = !!(this.currentId);
     this.getCategories();
     this.getCard();
   }
 
   getCard(): void {
-    const id = +this.route.snapshot.paramMap.get('id');
-    if (id) { // edit mode
-      this.cardService.getCard(id).subscribe(card => {
+    if (this.isEdit) { // edit mode
+      this.cardService.getCard(this.currentId).subscribe(card => {
         this.card = card;
       });
     } else { // create mode
@@ -44,20 +45,26 @@ export class CardDetailComponent implements OnInit {
   }
 
   onSave(): void {
-    const id = +this.route.snapshot.paramMap.get('id');
     console.log(this.card);
-    if (id) {
-      console.log('edit');
+    if (this.isEdit) {
       this.cardService.updateCard(this.card).subscribe(card => {
         console.log('update complete');
         console.log(card);
       });
     } else {
-      console.log('new');
       this.cardService.addCard(this.card).subscribe(card => {
         console.log('add complete');
         console.log(card);
+        this.router.navigate(['/cards']);
       });
     }
+  }
+
+  onDelete(): void {
+    console.log('delete card : ' + this.card.id);
+    this.cardService.deleteCard(this.card).subscribe(() => {
+      console.log('delete success');
+      this.router.navigate(['/cards']);
+    });
   }
 }

@@ -29,11 +29,19 @@
 
     <mat-form-field class="form-full-width">
       <mat-label>Author</mat-label>
-      <input matInput placeholder="Aka username" [(ngModel)]="card.authorUsername" name="authorUsername">
+      <input matInput placeholder="Aka username" [(ngModel)]="card.authorUsername" name="authorUsername"
+             [readonly]="isEdit">
+    </mat-form-field>
+
+    <mat-form-field class="form-full-width">
+      <mat-label>Password</mat-label>
+      <input type="password" matInput placeholder="" [(ngModel)]="card.authorPassword" name="authorPassword"
+             [disabled]="!isEdit">
     </mat-form-field>
   </form>
   <div class="button-row">
     <button mat-raised-button color="primary" (click)="onSave()">Save</button>
-    <button mat-raised-button color="warn" (click)="goBack()">Cancel</button>
+    <button mat-raised-button color="primary" (click)="goBack()">Cancel</button>
+    <button mat-raised-button color="warn" (click)="onDelete()" [disabled]="!isEdit">Delete</button>
   </div>
 
