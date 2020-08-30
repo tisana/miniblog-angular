@@ -7,6 +7,7 @@ const routes: Routes = [
   {path: '', redirectTo: '/cards', pathMatch: 'full'},
   {path: 'cards', component: CardsComponent},
   {path: 'card/edit/:id', component: CardDetailComponent},
+  {path: 'card/add', component: CardDetailComponent}
 
 ];
 

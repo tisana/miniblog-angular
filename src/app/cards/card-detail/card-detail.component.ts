@@ -11,7 +11,7 @@ import {Category} from '../models/category';
   styleUrls: ['./card-detail.component.css']
 })
 export class CardDetailComponent implements OnInit {
-  @Input() card: Card;
+  @Input() card: Card = new Card();
   categories: Category[];
 
   // selectedCategory: number;
@@ -26,10 +26,13 @@ export class CardDetailComponent implements OnInit {
 
   getCard(): void {
     const id = +this.route.snapshot.paramMap.get('id');
-    this.cardService.getCard(id).subscribe(card => {
-      this.card = card;
-      // this.selectedCategory = this.card.categoryId;
-    });
+    if (id) { // edit mode
+      this.cardService.getCard(id).subscribe(card => {
+        this.card = card;
+      });
+    } else { // create mode
+      this.card = new Card();
+    }
   }
 
   getCategories(): void {
@@ -40,4 +43,21 @@ export class CardDetailComponent implements OnInit {
     this.location.back();
   }
 
+  onSave(): void {
+    const id = +this.route.snapshot.paramMap.get('id');
+    console.log(this.card);
+    if (id) {
+      console.log('edit');
+      this.cardService.updateCard(this.card).subscribe(card => {
+        console.log('update complete');
+        console.log(card);
+      });
+    } else {
+      console.log('new');
+      this.cardService.addCard(this.card).subscribe(card => {
+        console.log('add complete');
+        console.log(card);
+      });
+    }
+  }
 }
