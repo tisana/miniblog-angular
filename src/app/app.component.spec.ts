@@ -16,16 +16,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'miniblog-ang'`, () => {
+  it(`should have as title 'Mini Blog'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('miniblog-ang');
+    expect(app.title).toEqual('Mini Blog');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain('miniblog-ang app is running!');
+    expect(compiled.querySelector('.title').textContent).toContain('Mini Blog');
   });
 });
