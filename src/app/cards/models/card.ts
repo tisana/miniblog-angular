@@ -4,7 +4,7 @@ export interface Card {
   status: string;
   content: string;
   authorId?: number;
-  authorUserName: string;
+  authorUsername: string;
   categoryId?: number;
   categoryName: string;
 }

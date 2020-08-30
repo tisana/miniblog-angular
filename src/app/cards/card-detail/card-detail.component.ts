@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Card} from '../models/card';
 import {ActivatedRoute} from '@angular/router';
 import {CardService} from '../services/card.service';
@@ -10,7 +10,7 @@ import {Location} from '@angular/common';
   styleUrls: ['./card-detail.component.css']
 })
 export class CardDetailComponent implements OnInit {
-  card: Card;
+  @Input() card: Card;
 
   constructor(private route: ActivatedRoute, private cardService: CardService, private location: Location) {
   }
