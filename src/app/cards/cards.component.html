@@ -12,7 +12,7 @@
             <mat-icon>edit</mat-icon>
           </button>
           <button mat-icon-button class="status-icon" aria-label="status icon">
-            <mat-icon>trip_origin</mat-icon>
+            <mat-icon [class]="card.status==='PUBLISH'?'color_green':'color_red'">trip_origin</mat-icon>
           </button>
         </div>
       </mat-card-header>
@@ -23,11 +23,11 @@
       </mat-card-content>
       <mat-card-actions>
         <button mat-button>
-          <mat-icon>favorite</mat-icon>
+          <mat-icon class="color_red">favorite</mat-icon>
           LIKE
         </button>
         <button mat-button>
-          <mat-icon>comment</mat-icon>
+          <mat-icon class="color_blue">comment</mat-icon>
           Comment
         </button>
       </mat-card-actions>

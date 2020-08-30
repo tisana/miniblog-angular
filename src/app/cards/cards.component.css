@@ -25,3 +25,15 @@
 .mat-card-content {
   height: 180px;
 }
+
+.color_blue {
+  color: royalblue;
+}
+
+.color_red {
+  color: crimson;
+}
+
+.color_green {
+  color: green;
+}
