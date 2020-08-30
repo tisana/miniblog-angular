@@ -14,7 +14,7 @@
 
     <mat-form-field class="form-full-width">
       <mat-label>Status</mat-label>
-      <mat-select>
+      <mat-select [(ngModel)]="card.status" name="status" [value]="card.status">
         <mat-option value="DRAFT">Draft</mat-option>
         <mat-option value="PUBLISH">Publish</mat-option>
       </mat-select>
@@ -22,16 +22,15 @@
 
     <mat-form-field class="form-full-width">
       <mat-label>Category</mat-label>
-      <mat-select>
+      <mat-select [(ngModel)]="card.categoryId" name="categoryId">
         <mat-option value=""></mat-option>
-        <mat-option value="1">Cat 1</mat-option>
-        <mat-option value="2">Cat 2</mat-option>
+        <mat-option *ngFor="let cat of categories" [value]="cat.id">{{cat.name}}</mat-option>
       </mat-select>
     </mat-form-field>
 
     <mat-form-field class="form-full-width">
       <mat-label>Author</mat-label>
-      <input matInput placeholder="Aka username" value="">
+      <input matInput placeholder="Aka username" [(ngModel)]="card.authorUsername" name="authorUsername">
     </mat-form-field>
   </form>
   <div class="button-row">
