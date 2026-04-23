@@ -1,12 +1,12 @@
 export class Card {
   id?: number;
-  name: string;
-  status: string;
-  content: string;
+  name = '';
+  status = 'DRAFT';
+  content = '';
   authorId?: number;
-  authorUsername: string;
+  authorUsername = '';
   categoryId?: number;
-  categoryName: string;
+  categoryName = '';
   // TODO remove when implement proper auth system
   authorPassword?: string;
 }

@@ -7,21 +7,23 @@ import {Category} from '../models/category';
 
 @Component({
   selector: 'app-card-detail',
+  standalone: false,
   templateUrl: './card-detail.component.html',
   styleUrls: ['./card-detail.component.css']
 })
 export class CardDetailComponent implements OnInit {
   @Input() card: Card = new Card();
-  categories: Category[];
-  isEdit: boolean;
-  currentId: number;
+  categories: Category[] = [];
+  isEdit = false;
+  currentId = 0;
 
   constructor(private route: ActivatedRoute, private router: Router, private cardService: CardService, private location: Location) {
   }
 
   ngOnInit(): void {
-    this.currentId = +this.route.snapshot.paramMap.get('id');
-    this.isEdit = !!(this.currentId);
+    const routeId = this.route.snapshot.paramMap.get('id');
+    this.currentId = routeId ? Number(routeId) : 0;
+    this.isEdit = this.currentId > 0;
     this.getCategories();
     this.getCard();
   }
