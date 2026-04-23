@@ -4,11 +4,12 @@ import {CardService} from './services/card.service';
 
 @Component({
   selector: 'app-cards',
+  standalone: false,
   templateUrl: './cards.component.html',
   styleUrls: ['./cards.component.css']
 })
 export class CardsComponent implements OnInit {
-  cards: Card[];
+  cards: Card[] = [];
 
   constructor(private cardService: CardService) {
   }
