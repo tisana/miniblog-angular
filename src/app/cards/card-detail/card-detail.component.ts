@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {Card} from '../models/card';
 import {ActivatedRoute, Router} from '@angular/router';
 import {CardService} from '../services/card.service';
@@ -9,6 +9,7 @@ import {Category} from '../models/category';
   selector: 'app-card-detail',
   standalone: false,
   templateUrl: './card-detail.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./card-detail.component.css']
 })
 export class CardDetailComponent implements OnInit {

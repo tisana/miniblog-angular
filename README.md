@@ -1,10 +1,10 @@
 # Miniblog Angular
 
-This project uses [Angular CLI](https://github.com/angular/angular-cli) 20.x.
+This project uses [Angular CLI](https://github.com/angular/angular-cli) 22.x.
 
 ## Overview
 
-Miniblog Angular is a small Angular 20 client for managing blog cards. The app lists blog entries, shows their publish status, and supports adding, editing, and deleting entries through a REST API.
+Miniblog Angular is a small Angular 22 client for managing blog cards. The app lists blog entries, shows their publish status, and supports adding, editing, and deleting entries through a REST API.
 
 Recent UI and data-flow changes include:
 
@@ -17,8 +17,8 @@ Recent UI and data-flow changes include:
 
 ## Requirements
 
-- Node.js `^20.19.0`, `^22.12.0`, or `^24.0.0`, plus npm.
-- Angular CLI 20, available through the project dependency after `npm install`.
+- Node.js `^22.22.3 || ^24.15.0 || ^26.0.0`, plus npm. CI uses Node.js `24.15.0`.
+- Angular CLI 22.x, available through the project dependency after `npm install`.
 - A backend API running at `http://localhost:8081`.
 
 The frontend currently calls these API routes:
@@ -66,11 +66,11 @@ Build the project:
 npm run build
 ```
 
-The build artifacts will be stored in `dist/miniblog-ang/`. The default build configuration is production.
+The production build artifacts, including `index.html`, will be stored in `dist/miniblog-ang/browser/`. The default build configuration is production.
 
 ## Running unit tests
 
-Run unit tests via [Karma](https://karma-runner.github.io):
+Run unit tests with [Karma](https://karma-runner.github.io) and Jasmine:
 
 ```sh
 npm test
@@ -78,7 +78,7 @@ npm test
 
 ## End-to-end tests
 
-This Angular 20 setup does not currently include an end-to-end test runner.
+This Angular 22 setup does not currently include an end-to-end test runner.
 
 ## Further help
 

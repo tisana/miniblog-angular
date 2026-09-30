@@ -1,47 +1,49 @@
-  <h2>Card Details</h2>
-  <form class="card-form">
-    <mat-form-field class="form-full-width">
-      <mat-label> Blog Name</mat-label>
-      <input matInput placeholder="Blog Title" [(ngModel)]="card.name" name="name">
-    </mat-form-field>
+<h2>Card Details</h2>
+<form class="card-form">
+  <mat-form-field class="form-full-width">
+    <mat-label> Blog Name</mat-label>
+    <input matInput placeholder="Blog Title" [(ngModel)]="card.name" name="name">
+  </mat-form-field>
 
-    <mat-form-field class="form-full-width">
-      <mat-label>Content</mat-label>
-      <textarea matInput placeholder="Ex. It makes me feel..." [(ngModel)]="card.content" rows="4"
-                name="content"></textarea>
-    </mat-form-field>
+  <mat-form-field class="form-full-width">
+    <mat-label>Content</mat-label>
+    <textarea matInput placeholder="Ex. It makes me feel..." [(ngModel)]="card.content" rows="4"
+    name="content"></textarea>
+  </mat-form-field>
 
-    <mat-form-field class="form-full-width">
-      <mat-label>Status</mat-label>
-      <mat-select [(ngModel)]="card.status" name="status" [value]="card.status">
-        <mat-option value="DRAFT">Draft</mat-option>
-        <mat-option value="PUBLISH">Publish</mat-option>
-      </mat-select>
-    </mat-form-field>
+  <mat-form-field class="form-full-width">
+    <mat-label>Status</mat-label>
+    <mat-select [(ngModel)]="card.status" name="status" [value]="card.status">
+      <mat-option value="DRAFT">Draft</mat-option>
+      <mat-option value="PUBLISH">Publish</mat-option>
+    </mat-select>
+  </mat-form-field>
 
-    <mat-form-field class="form-full-width">
-      <mat-label>Category</mat-label>
-      <mat-select [(ngModel)]="card.categoryId" name="categoryId">
-        <mat-option value=""></mat-option>
-        <mat-option *ngFor="let cat of categories" [value]="cat.id">{{cat.name}}</mat-option>
-      </mat-select>
-    </mat-form-field>
+  <mat-form-field class="form-full-width">
+    <mat-label>Category</mat-label>
+    <mat-select [(ngModel)]="card.categoryId" name="categoryId">
+      <mat-option value=""></mat-option>
+      @for (cat of categories; track cat) {
+        <mat-option [value]="cat.id">{{cat.name}}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
 
-    <mat-form-field class="form-full-width">
-      <mat-label>Author</mat-label>
-      <input matInput placeholder="Aka username" [(ngModel)]="card.authorUsername" name="authorUsername"
-             [readonly]="isEdit">
+  <mat-form-field class="form-full-width">
+    <mat-label>Author</mat-label>
+    <input matInput placeholder="Aka username" [(ngModel)]="card.authorUsername" name="authorUsername"
+      [readonly]="isEdit">
     </mat-form-field>
 
     <mat-form-field class="form-full-width">
       <mat-label>Password</mat-label>
       <input type="password" matInput placeholder="" [(ngModel)]="card.authorPassword" name="authorPassword"
-             [disabled]="!isEdit">
-    </mat-form-field>
-  </form>
-  <div class="button-row">
-    <button mat-raised-button color="primary" (click)="onSave()">Save</button>
-    <button mat-raised-button color="primary" (click)="goBack()">Cancel</button>
-    <button mat-raised-button color="warn" (click)="onDelete()" [disabled]="!isEdit">Delete</button>
-  </div>
+        [disabled]="!isEdit">
+      </mat-form-field>
+    </form>
+    <div class="button-row">
+      <button mat-raised-button color="primary" (click)="onSave()">Save</button>
+      <button mat-raised-button color="primary" (click)="goBack()">Cancel</button>
+      <button mat-raised-button color="warn" (click)="onDelete()" [disabled]="!isEdit">Delete</button>
+    </div>
 

@@ -2,40 +2,42 @@
   <button mat-raised-button color="primary" routerLink="/card/add">Add new Blog</button>
 </div>
 <mat-grid-list cols="3">
-  <mat-grid-tile *ngFor="let card of cards">
-    <mat-card class="blog-card">
-      <mat-card-header>
-        <div class="card-title">
-          <mat-card-title>{{card.name}}</mat-card-title>
-          <span class="icon-spacer"></span>
-          <button mat-icon-button class="edit-icon" aria-label="edit icon" routerLink="/card/edit/{{card.id}}">
-            <mat-icon>edit</mat-icon>
+  @for (card of cards; track card) {
+    <mat-grid-tile>
+      <mat-card class="blog-card">
+        <mat-card-header>
+          <div class="card-title">
+            <mat-card-title>{{card.name}}</mat-card-title>
+            <span class="icon-spacer"></span>
+            <button mat-icon-button class="edit-icon" aria-label="edit icon" routerLink="/card/edit/{{card.id}}">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button class="status-icon" aria-label="status icon">
+              <mat-icon [class]="card.status==='PUBLISH'?'color_green':'color_red'">trip_origin</mat-icon>
+            </button>
+          </div>
+        </mat-card-header>
+        <mat-card-content>
+          <p>
+            {{card.content}}
+          </p>
+        </mat-card-content>
+        <mat-card-actions>
+          <button mat-button>
+            <mat-icon class="color_red">favorite</mat-icon>
+            LIKE
           </button>
-          <button mat-icon-button class="status-icon" aria-label="status icon">
-            <mat-icon [class]="card.status==='PUBLISH'?'color_green':'color_red'">trip_origin</mat-icon>
+          <button mat-button>
+            <mat-icon class="color_blue">comment</mat-icon>
+            Comment
           </button>
-        </div>
-      </mat-card-header>
-      <mat-card-content>
-        <p>
-          {{card.content}}
-        </p>
-      </mat-card-content>
-      <mat-card-actions>
-        <button mat-button>
-          <mat-icon class="color_red">favorite</mat-icon>
-          LIKE
-        </button>
-        <button mat-button>
-          <mat-icon class="color_blue">comment</mat-icon>
-          Comment
-        </button>
-      </mat-card-actions>
-      <mat-card-header>
-        <div mat-card-avatar class="avartar-icon"></div>
-        <mat-card-title>{{card.authorUsername}}</mat-card-title>
-        <mat-card-subtitle>2 hours ago</mat-card-subtitle>
-      </mat-card-header>
-    </mat-card>
-  </mat-grid-tile>
+        </mat-card-actions>
+        <mat-card-header>
+          <div mat-card-avatar class="avartar-icon"></div>
+          <mat-card-title>{{card.authorUsername}}</mat-card-title>
+          <mat-card-subtitle>2 hours ago</mat-card-subtitle>
+        </mat-card-header>
+      </mat-card>
+    </mat-grid-tile>
+  }
 </mat-grid-list>
