@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {Card} from './models/card';
 import {CardService} from './services/card.service';
 
@@ -6,6 +6,7 @@ import {CardService} from './services/card.service';
   selector: 'app-cards',
   standalone: false,
   templateUrl: './cards.component.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrls: ['./cards.component.css']
 })
 export class CardsComponent implements OnInit {
