@@ -1,16 +1,46 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({providedIn: 'root'})
 export class AuthService {
+  private token = '';
+  private expiresAt = 0;
+  message = '';
 
-  constructor(private http: HttpClient) {
+  setToken(value: string): void {
+    const token = value.trim().replace(/^Bearer\s+/i, '');
+    const parts = token.split('.');
+    try {
+      if (parts.length !== 3 || parts.some(part => !/^[A-Za-z0-9_-]+$/.test(part))) {
+        throw new Error('Invalid token');
+      }
+      const payload = parts[1].replace(/-/g, '+').replace(/_/g, '/');
+      const claims = JSON.parse(atob(payload.padEnd(Math.ceil(payload.length / 4) * 4, '=')));
+      if (typeof claims.exp !== 'number' || !Number.isFinite(claims.exp) || claims.exp * 1000 <= Date.now()) {
+        throw new Error('Expired token');
+      }
+      this.token = token;
+      this.expiresAt = claims.exp * 1000;
+      this.message = '';
+    } catch {
+      throw new Error('Invalid or expired JWT');
+    }
+    // Decoding checks format/expiry only. The backend verifies signature and permissions.
+  }
+
+  hasToken(): boolean {
+    if (this.token && this.expiresAt <= Date.now()) {
+      this.clearToken('Your token expired. Enter a fresh JWT.');
+    }
+    return this.token.length > 0;
   }
 
   getAuthorizationToken(): string {
-    // TODO implement proper auth system
-    return 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpc3MiOiJPbmxpbmUgSldUIEJ1aWxkZXIiLCJpYXQiOjE1OTg2MTI4MjYsImV4cCI6MTYzMDE0ODgyNiwiYXVkIjoid3d3LmV4YW1wbGUuY29tIiwic3ViIjoianJvY2tldEBleGFtcGxlLmNvbSIsIkdpdmVuTmFtZSI6IkpvaG5ueSIsIlN1cm5hbWUiOiJSb2NrZXQiLCJFbWFpbCI6Impyb2NrZXRAZXhhbXBsZS5jb20iLCJSb2xlIjpbIk1hbmFnZXIiLCJQcm9qZWN0IEFkbWluaXN0cmF0b3IiXSwiYXV0aG9yaXRpZXMiOiJST0xFX1VTRVIiLCJhdXRoIjoiUk9MRV9VU0VSIn0.Qpdkc4HNE_Nixov7Xh9oC4CMjJG6aEd4P_e5Uv-xBXBNcWzchPOLpenZjeoE_5In8Q8lZnKWeqeVfsEyIhqhbA';
+    return this.hasToken() ? 'Bearer ' + this.token : '';
+  }
+
+  clearToken(message = ''): void {
+    this.token = '';
+    this.expiresAt = 0;
+    this.message = message;
   }
 }
