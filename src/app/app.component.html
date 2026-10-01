@@ -1,2 +1,16 @@
 <h1 class="title">{{title}}</h1>
-<router-outlet></router-outlet>
+@if (auth.hasToken()) {
+  <button mat-button (click)="auth.clearToken()">Clear token</button>
+  <router-outlet></router-outlet>
+} @else {
+  <form (ngSubmit)="useToken()">
+    <p>Enter an externally obtained JWT to connect to Mini Blog. It is kept only until you clear it or reload this page.</p>
+    <mat-form-field>
+      <mat-label>Access token</mat-label>
+      <input matInput type="password" name="accessToken" autocomplete="off" [(ngModel)]="tokenInput">
+    </mat-form-field>
+    <button mat-raised-button type="submit">Use token</button>
+    @if (tokenError) { <p role="alert">{{tokenError}}</p> }
+    @if (auth.message) { <p role="alert">{{auth.message}}</p> }
+  </form>
+}
