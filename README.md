@@ -12,8 +12,8 @@ Recent UI and data-flow changes include:
 - Delete support from the card detail form.
 - Category selection loaded from the API.
 - Draft and Publish status values with a colored status indicator on each card.
-- Author username and password fields for the current lightweight author flow.
-- Early authentication scaffolding in `AuthService` and `AuthInterceptor`; proper authentication is still a TODO.
+- Author selection loaded from the API, with nested author/category relations mapped to the form.
+- External JWT entry with an API-scoped authentication interceptor. Tokens stay in memory until cleared or the page reloads.
 
 ## Requirements
 
@@ -26,9 +26,10 @@ The frontend currently calls these API routes:
 - `GET /api/cards`
 - `GET /api/cards/:id`
 - `POST /api/cards`
-- `PUT /api/cards`
+- `PUT /api/cards/:id`
 - `DELETE /api/cards/:id`
 - `GET /api/categories`
+- `GET /api/authors`
 
 ## Setup
 
@@ -47,6 +48,12 @@ npm start
 ```
 
 Navigate to `http://localhost:4200/`. The app will automatically reload if you change any source files.
+
+Enter a fresh JWT obtained from your authentication service and click **Use token**. Do not put tokens in source files. The app checks token format and expiration; the backend verifies signature and permissions. A backend `401` clears the session and requests a fresh token.
+
+API calls use `/api` on the browser origin. The development proxy forwards `/api/**` to `http://localhost:8081`, including the Authorization header. Restart `npm start` after changing proxy configuration. This development setup does not depend on backend browser CORS configuration.
+
+For deployment, serve the frontend and `/api` through the same origin, or set `apiUrl` in `src/environments/environment.prod.ts` to the backend origin and configure backend CORS accordingly. The Angular development proxy is not part of the production build.
 
 ## Code scaffolding
 
