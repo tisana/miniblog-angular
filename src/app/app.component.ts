@@ -1,4 +1,5 @@
 import {Component, ChangeDetectionStrategy} from '@angular/core';
+import {AuthService} from './services/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -9,4 +10,18 @@ import {Component, ChangeDetectionStrategy} from '@angular/core';
 })
 export class AppComponent {
   title = 'Mini Blog';
+  tokenInput = '';
+  tokenError = '';
+
+  constructor(public auth: AuthService) {}
+
+  useToken(): void {
+    try {
+      this.auth.setToken(this.tokenInput);
+      this.tokenInput = '';
+      this.tokenError = '';
+    } catch {
+      this.tokenError = 'Enter a valid, unexpired JWT.';
+    }
+  }
 }
