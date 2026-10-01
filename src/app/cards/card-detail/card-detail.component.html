@@ -1,4 +1,5 @@
 <h2>Card Details</h2>
+@if (error) { <p role="alert">{{error}}</p> }
 <form class="card-form">
   <mat-form-field class="form-full-width">
     <mat-label> Blog Name</mat-label>
@@ -22,7 +23,7 @@
   <mat-form-field class="form-full-width">
     <mat-label>Category</mat-label>
     <mat-select [(ngModel)]="card.categoryId" name="categoryId">
-      <mat-option value=""></mat-option>
+      <mat-option [value]="undefined">None</mat-option>
       @for (cat of categories; track cat) {
         <mat-option [value]="cat.id">{{cat.name}}</mat-option>
       }
@@ -31,19 +32,16 @@
 
   <mat-form-field class="form-full-width">
     <mat-label>Author</mat-label>
-    <input matInput placeholder="Aka username" [(ngModel)]="card.authorUsername" name="authorUsername"
-      [readonly]="isEdit">
-    </mat-form-field>
-
-    <mat-form-field class="form-full-width">
-      <mat-label>Password</mat-label>
-      <input type="password" matInput placeholder="" [(ngModel)]="card.authorPassword" name="authorPassword"
-        [disabled]="!isEdit">
-      </mat-form-field>
+    <mat-select [(ngModel)]="card.authorId" name="authorId">
+      <mat-option [value]="undefined">None</mat-option>
+      @for (author of authors; track author.id) {
+        <mat-option [value]="author.id">{{author.username}}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
     </form>
     <div class="button-row">
-      <button mat-raised-button color="primary" (click)="onSave()">Save</button>
+      <button mat-raised-button color="primary" (click)="onSave()" [disabled]="saving">Save</button>
       <button mat-raised-button color="primary" (click)="goBack()">Cancel</button>
-      <button mat-raised-button color="warn" (click)="onDelete()" [disabled]="!isEdit">Delete</button>
+      <button mat-raised-button color="warn" (click)="onDelete()" [disabled]="!isEdit || saving">Delete</button>
     </div>
-

@@ -7,7 +7,8 @@ import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {ActivatedRoute, convertToParamMap, Router} from '@angular/router';
-import {Subject} from 'rxjs';
+import {of, Subject} from 'rxjs';
+import {HttpErrorResponse} from '@angular/common/http';
 import {Card} from '../models/card';
 import {Category} from '../models/category';
 import {CardService} from '../services/card.service';
@@ -22,11 +23,11 @@ describe('CardDetailComponent', () => {
   let card: Subject<Card>;
   let categories: Subject<Category[]>;
   let savedCard: Subject<Card>;
-  let deletedCard: Subject<Card>;
+  let deletedCard: Subject<void>;
 
   const editCard: Card = {
     id: 7, name: 'Delayed card title', content: 'Delayed card content', status: 'PUBLISH',
-    authorId: 3, authorUsername: 'alice', authorPassword: 'secret', categoryId: 2,
+    authorId: 3, authorUsername: 'alice', categoryId: 2,
     categoryName: 'Technology'
   };
 
@@ -34,9 +35,10 @@ describe('CardDetailComponent', () => {
     card = new Subject<Card>();
     categories = new Subject<Category[]>();
     savedCard = new Subject<Card>();
-    deletedCard = new Subject<Card>();
+    deletedCard = new Subject<void>();
     cardService = jasmine.createSpyObj<CardService>('CardService',
-      ['getCard', 'getCategories', 'addCard', 'updateCard', 'deleteCard']);
+      ['getCard', 'getCategories', 'getAuthors', 'addCard', 'updateCard', 'deleteCard']);
+    cardService.getAuthors.and.returnValue(of([{id: 3, username: 'alice'}]));
     cardService.getCard.and.returnValue(card.asObservable());
     cardService.getCategories.and.returnValue(categories.asObservable());
     cardService.addCard.and.returnValue(savedCard.asObservable());
@@ -95,8 +97,8 @@ describe('CardDetailComponent', () => {
     expect(fixture.componentInstance.card).toEqual(editCard);
     expect(root.querySelector<HTMLInputElement>('input[name="name"]')?.value).toBe('Delayed card title');
     expect(root.querySelector<HTMLTextAreaElement>('textarea[name="content"]')?.value).toBe('Delayed card content');
-    expect(root.querySelector<HTMLInputElement>('input[name="authorUsername"]')?.value).toBe('alice');
-    expect(root.querySelector<HTMLInputElement>('input[name="authorPassword"]')?.value).toBe('secret');
+    expect(root.querySelector('mat-select[name="authorId"]')?.textContent).toContain('alice');
+    expect(root.querySelector('input[name="authorPassword"]')).toBeNull();
     expect(root.querySelector('mat-select[name="status"]')?.textContent).toContain('Publish');
 
     fixture.ngZone!.run(() => {
@@ -150,8 +152,22 @@ describe('CardDetailComponent', () => {
 
     expect(cardService.deleteCard).toHaveBeenCalledOnceWith(editCard);
     expect(router.navigate).not.toHaveBeenCalled();
-    deletedCard.next({...editCard});
+    deletedCard.next();
     await fixture.whenStable();
     expect(router.navigate).toHaveBeenCalledOnceWith(['/cards']);
+  });
+
+  it('shows a failed save and keeps the unsaved form available', async () => {
+    route.snapshot.paramMap = convertToParamMap({});
+    await initialize();
+    fixture.componentInstance.card.name = 'Unsaved blog';
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.nativeElement.querySelector('.button-row button').click();
+    savedCard.error(new HttpErrorResponse({status: 503}));
+    fixture.detectChanges();
+    expect(fixture.nativeElement.querySelector('[role="alert"]')?.textContent).toContain('503');
+    expect(fixture.nativeElement.querySelector('input[name="name"]').value).toBe('Unsaved blog');
+    expect(router.navigate).not.toHaveBeenCalled();
   });
 });
