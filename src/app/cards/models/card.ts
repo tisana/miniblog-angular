@@ -7,6 +7,4 @@ export class Card {
   authorUsername = '';
   categoryId?: number;
   categoryName = '';
-  // TODO remove when implement proper auth system
-  authorPassword?: string;
 }
