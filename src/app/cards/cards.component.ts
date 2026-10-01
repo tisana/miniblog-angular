@@ -1,6 +1,7 @@
 import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {Card} from './models/card';
 import {CardService} from './services/card.service';
+import {apiErrorMessage} from '../services/api-error';
 
 @Component({
   selector: 'app-cards',
@@ -11,6 +12,7 @@ import {CardService} from './services/card.service';
 })
 export class CardsComponent implements OnInit {
   cards: Card[] = [];
+  error = '';
 
   constructor(private cardService: CardService) {
   }
@@ -20,6 +22,7 @@ export class CardsComponent implements OnInit {
   }
 
   getCards(): void {
-    this.cardService.getCards().subscribe(cards => this.cards = cards);
+    this.error = '';
+    this.cardService.getCards().subscribe({next: cards => this.cards = cards, error: error => this.error = apiErrorMessage(error)});
   }
 }

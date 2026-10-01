@@ -1,4 +1,5 @@
 <div>
+  @if (error) { <p role="alert">{{error}}</p> <button mat-button (click)="getCards()">Retry</button> }
   <button mat-raised-button color="primary" routerLink="/card/add">Add new Blog</button>
 </div>
 <mat-grid-list cols="3">
