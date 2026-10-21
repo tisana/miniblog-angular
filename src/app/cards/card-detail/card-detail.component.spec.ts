@@ -5,7 +5,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {MATERIAL_ANIMATIONS} from '@angular/material/core';
 import {ActivatedRoute, convertToParamMap, Router} from '@angular/router';
 import {of, Subject} from 'rxjs';
 import {HttpErrorResponse} from '@angular/common/http';
@@ -51,8 +51,9 @@ describe('CardDetailComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [CardDetailComponent],
       imports: [CommonModule, FormsModule, MatButtonModule, MatFormFieldModule,
-        MatInputModule, MatSelectModule, NoopAnimationsModule],
+        MatInputModule, MatSelectModule],
       providers: [
+        {provide: MATERIAL_ANIMATIONS, useValue: {animationsDisabled: true}},
         {provide: CardService, useValue: cardService},
         {provide: ActivatedRoute, useValue: route},
         {provide: Router, useValue: router},

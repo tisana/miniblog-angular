@@ -5,13 +5,14 @@ import {FormsModule} from '@angular/forms';
 import {MatButtonModule} from '@angular/material/button';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+import {MATERIAL_ANIMATIONS} from '@angular/material/core';
 import {AuthService} from './services/auth.service';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RouterModule.forRoot([]), FormsModule, MatButtonModule, MatFormFieldModule, MatInputModule, NoopAnimationsModule],
+      imports: [RouterModule.forRoot([]), FormsModule, MatButtonModule, MatFormFieldModule, MatInputModule],
+      providers: [{provide: MATERIAL_ANIMATIONS, useValue: {animationsDisabled: true}}],
       declarations: [
         AppComponent
       ],
